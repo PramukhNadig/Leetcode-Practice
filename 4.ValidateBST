@@ -1,0 +1,56 @@
+Keep a running track of the values that the other nodes can be for a vlid bst
+
+Had to use Long.MAX_VALUE and Long.MIN_VALUE since one of the test cases used INT_MAX as root
+
+Check if root.val is within bounds, pass new bounds onto next
+
+
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return isValid(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+    
+    private boolean isValid(TreeNode root, long low, long high){
+        if(root == null){
+            return true;
+        }
+        
+        if(root.val <= low || root.val >= high){
+            return false;
+        }
+        if(root.right != null){
+            if(root.val >= root.right.val){
+                return false;
+            }
+        }
+        
+        if(root.left != null){
+            if(root.val <= root.left.val){
+                return false;
+            }
+        }
+        
+        return isValid(root.left, low, root.val) && isValid(root.right, root.val, high);
+    }
+}
+```
+
+Runtime: 0 ms, faster than 100.00% of Java online submissions for Validate Binary Search Tree.
+
+Memory Usage: 44 MB, less than 48.02% of Java online submissions for Validate Binary Search Tree.
